@@ -46,6 +46,13 @@ public class BeatBoxFragment extends Fragment {
         public SoundHolder(ListItemSoundBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.setViewModel(new SoundViewModel(mBeatBox));
+        }
+
+        public void bind(Sound sound) {
+            mBinding.getViewModel().setSound(sound);
+            // Метод executePendingBindings приказывает RecyclerView обновить макет немедленно
+            mBinding.executePendingBindings();
         }
     }
 
@@ -66,7 +73,8 @@ public class BeatBoxFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(SoundHolder holder, int position) {
-
+            Sound sound = mSounds.get(position);
+            holder.bind(sound);
         }
 
         @Override
